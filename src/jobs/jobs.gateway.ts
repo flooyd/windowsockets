@@ -20,7 +20,7 @@ import { UpdateJobDto } from './dto/update-job.dto';
 
 import { Server } from 'socket.io';
 
-import { WebsocketExceptionsFilter } from 'src/filters/WebSocketExceptionsFilter';
+import { WebSocketExceptionsFilter } from 'src/filters/WebSocketExceptionsFilter';
 
 @WebSocketGateway({
   cors: {
@@ -35,7 +35,7 @@ export class JobsGateway {
     @Inject(Logger) private readonly logger: LoggerService,
   ) {}
 
-  @UseFilters(new WebsocketExceptionsFilter('createJob'))
+  @UseFilters(new WebSocketExceptionsFilter('createJob'))
   @SubscribeMessage('createJob')
   create(
     @MessageBody()

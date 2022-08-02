@@ -4,7 +4,7 @@ import { BaseWsExceptionFilter, WsException } from '@nestjs/websockets';
 import logger from 'src/util';
 
 @Catch(WsException, HttpException)
-export class WebsocketExceptionsFilter extends BaseWsExceptionFilter {
+export class WebSocketExceptionsFilter extends BaseWsExceptionFilter {
   constructor(private executingMethod: String) {
     super();
   }
@@ -23,7 +23,7 @@ export class WebsocketExceptionsFilter extends BaseWsExceptionFilter {
           error: details,
           message: details.message,
         }),
-      WebsocketExceptionsFilter.name,
+      WebSocketExceptionsFilter.name,
     );
     client.send(
       JSON.stringify({
