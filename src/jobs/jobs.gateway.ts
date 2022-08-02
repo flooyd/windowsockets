@@ -17,7 +17,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { WebsocketExceptionsFilter } from 'src/filters/WebsocketExceptionsFilter';
+import { WebsocketExceptionsFilter } from 'src/filters/WebSocketExceptionsFilter';
 
 @WebSocketGateway({
   cors: {
