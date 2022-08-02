@@ -24,21 +24,26 @@ import { WebsocketExceptionsFilter } from 'src/filters/WebsocketExceptionsFilter
     origin: '*',
   },
 })
-@UseFilters(WebsocketExceptionsFilter)
 @UsePipes(new ValidationPipe({ whitelist: true }))
 export class JobsGateway {
+  blah = 5;
+
   @WebSocketServer() server: Server;
   constructor(
     private readonly jobsService: JobsService,
     @Inject(Logger) private readonly logger: LoggerService,
   ) {}
 
+  @UseFilters(new WebsocketExceptionsFilter('createJob'))
   @SubscribeMessage('createJob')
   create(
     @MessageBody()
     createJobDto: CreateJobDto,
   ) {
-    this.logger.log('hello', {});
+    this.logger.log(
+      'CREATE: ' + JSON.stringify(createJobDto),
+      JobsGateway.name,
+    );
     return {
       event: 'createJob',
       data: createJobDto,
