@@ -18,8 +18,6 @@ import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
 
-import { Server } from 'socket.io';
-
 import { WebSocketExceptionsFilter } from 'src/filters/WebSocketExceptionsFilter';
 
 @WebSocketGateway({
@@ -29,7 +27,6 @@ import { WebSocketExceptionsFilter } from 'src/filters/WebSocketExceptionsFilter
 })
 @UsePipes(new ValidationPipe({ whitelist: true }))
 export class JobsGateway {
-  @WebSocketServer() server: Server;
   constructor(
     private readonly jobsService: JobsService,
     @Inject(Logger) private readonly logger: LoggerService,
@@ -62,7 +59,6 @@ export class JobsGateway {
 
   @SubscribeMessage('findOneJob')
   findOne(@MessageBody() id: number) {
-    this.server.emit('findOneJob', { stuff: 'stuff' });
     return this.jobsService.findOne(id);
   }
 
