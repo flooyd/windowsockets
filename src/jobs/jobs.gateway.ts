@@ -5,10 +5,6 @@ import {
   WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
-import { JobsService } from './jobs.service';
-import { CreateJobDto } from './dto/create-job.dto';
-import { UpdateJobDto } from './dto/update-job.dto';
 import {
   Inject,
   Logger,
@@ -17,6 +13,13 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+
+import { JobsService } from './jobs.service';
+import { CreateJobDto } from './dto/create-job.dto';
+import { UpdateJobDto } from './dto/update-job.dto';
+
+import { Server } from 'socket.io';
+
 import { WebsocketExceptionsFilter } from 'src/filters/WebSocketExceptionsFilter';
 
 @WebSocketGateway({
@@ -26,8 +29,6 @@ import { WebsocketExceptionsFilter } from 'src/filters/WebSocketExceptionsFilter
 })
 @UsePipes(new ValidationPipe({ whitelist: true }))
 export class JobsGateway {
-  blah = 5;
-
   @WebSocketServer() server: Server;
   constructor(
     private readonly jobsService: JobsService,
