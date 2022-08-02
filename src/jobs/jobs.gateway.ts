@@ -38,7 +38,7 @@ export class JobsGateway {
     @MessageBody()
     createJobDto: CreateJobDto,
   ) {
-    this.logger.log({ blah: createJobDto }, JobsGateway.name);
+    this.logger.log('hello', {});
     return {
       event: 'createJob',
       data: createJobDto,

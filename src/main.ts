@@ -15,10 +15,10 @@ async function bootstrap() {
           format: winston.format.combine(
             winston.format.timestamp(),
             winston.format.ms(),
-            nestWinstonModuleUtilities.format.nestLike('windowsback', {
-              // options
-            }),
+            nestWinstonModuleUtilities.format.nestLike('windowsback'),
           ),
+          level: 'silly',
+          eol: '\r\n',
         }),
       ],
     }),
