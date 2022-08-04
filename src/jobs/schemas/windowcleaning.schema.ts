@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
 import { Document } from 'mongoose';
+
 import { Job } from './classes/job';
 
 export type WindowCleaningDocument = WindowCleaning & Document;

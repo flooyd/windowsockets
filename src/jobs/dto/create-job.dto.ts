@@ -1,4 +1,4 @@
-import { IsEmail, isNumber, IsNumber, Max, Min, min } from 'class-validator';
+import { IsEmail, IsNumber, Max, Min } from 'class-validator';
 
 export class CreateJobDto {
   @IsEmail()
