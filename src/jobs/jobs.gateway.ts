@@ -2,7 +2,6 @@ import {
   WebSocketGateway,
   SubscribeMessage,
   MessageBody,
-  WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
 import {
@@ -34,7 +33,7 @@ export class JobsGateway {
 
   @UseFilters(new WebSocketExceptionsFilter('createJob'))
   @SubscribeMessage('createJob')
-  create(
+  async create(
     @MessageBody()
     createJobDto: CreateJobDto,
   ) {
@@ -42,9 +41,11 @@ export class JobsGateway {
       'CREATE: ' + JSON.stringify(createJobDto),
       JobsGateway.name,
     );
+
+    const createdJob = await this.jobsService.create(createJobDto);
     return {
       event: 'createJob',
-      data: createJobDto,
+      data: createdJob,
     };
   }
 

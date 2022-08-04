@@ -1,12 +1,24 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
+import {
+  WindowCleaning,
+  WindowCleaningDocument,
+} from './schemas/windowcleaning.schema';
 
 @Injectable()
 export class JobsService {
-  create(createJobDto: CreateJobDto) {
-    return 'This action adds a new job';
+  constructor(
+    @InjectModel(WindowCleaning.name)
+    private windowCleaningModel: Model<WindowCleaningDocument>,
+  ) {}
+
+  create(createJobDto: CreateJobDto): Promise<WindowCleaning> {
+    const createdJob = new this.windowCleaningModel(createJobDto);
+    return createdJob.save();
   }
 
   findAll() {
