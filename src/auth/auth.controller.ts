@@ -13,6 +13,7 @@ import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 
 import { AuthService } from './auth.service';
+
 import { User } from './schemas/user.schema';
 
 @Controller('api/auth')
