@@ -1,14 +1,15 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema as NestSchema, SchemaFactory } from '@nestjs/mongoose';
 
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
 import { Job } from './classes/job';
+import { JobCollection } from './jobCollection.schema';
 
 export type BusinessWindowCleaningDocument = BusinessWindowCleaning & Document;
 
-@Schema()
+@NestSchema()
 export class BusinessWindowCleaning extends Job {
-  @Prop()
+  @Prop({ required: true })
   numWindows: number;
 
   @Prop()

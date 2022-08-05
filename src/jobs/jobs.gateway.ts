@@ -5,6 +5,8 @@ import {
   WsResponse,
 } from '@nestjs/websockets';
 import {
+  HttpException,
+  HttpStatus,
   Inject,
   Logger,
   LoggerService,
@@ -24,7 +26,7 @@ import { WebSocketExceptionsFilter } from 'src/filters/WebSocketExceptionsFilter
     origin: '*',
   },
 })
-@UsePipes(new ValidationPipe({ whitelist: true }))
+@UsePipes(new ValidationPipe())
 export class JobsGateway {
   constructor(
     private readonly jobsService: JobsService,
@@ -42,7 +44,17 @@ export class JobsGateway {
       JobsGateway.name,
     );
 
-    const createdJob = await this.jobsService.create(createJobDto);
+    const createdJob = await this.jobsService
+      .create(createJobDto, 'floydtjones@gmail.com')
+      .catch((err) => {
+        throw new HttpException(
+          {
+            message: err.message,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      });
+
     return {
       event: 'createJob',
       data: createdJob,
@@ -55,6 +67,19 @@ export class JobsGateway {
     return {
       event: 'findAllJobs',
       data: jobs,
+    };
+  }
+
+  @UseFilters(new WebSocketExceptionsFilter('findJobCollection'))
+  @SubscribeMessage('findJobCollection')
+  async findJobCollection() {
+    const jobCollection = await this.jobsService.findJobCollection(
+      'floydtjones@gmail.com',
+    );
+    console.log(jobCollection);
+    return {
+      event: 'findJobCollection',
+      data: jobCollection.toJSON(),
     };
   }
 

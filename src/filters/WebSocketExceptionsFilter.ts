@@ -8,9 +8,11 @@ export class WebSocketExceptionsFilter extends BaseWsExceptionFilter {
   constructor(private executingMethod: String) {
     super();
   }
+
   catch(exception: WsException | HttpException, host: ArgumentsHost) {
     const client = host.switchToWs().getClient() as WebSocket;
     const data = host.switchToWs().getData();
+    console.log(data);
     const error =
       exception instanceof WsException
         ? exception.getError()
