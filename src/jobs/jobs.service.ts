@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel, Prop } from '@nestjs/mongoose';
 
 import { Model, Schema } from 'mongoose';
@@ -39,7 +39,6 @@ export class JobsService {
     let id;
     let result;
 
-    //'lawn, car, carWindows, residential, business']
     switch (createJobDto.type) {
       case 'business':
         result = await this.createBusinessWindowCleaning(createJobDto, email);
@@ -112,15 +111,34 @@ export class JobsService {
     };
   }
 
-  findAll() {
-    return `This action returns all jobs`;
+  async findAllOfType(type) {
+    let jobCollections = await this.jobCollectionModel.find({ type });
+
+    if (!jobCollections || jobCollections.length === 0) {
+      return null;
+    }
+
+    return jobCollections;
   }
 
   async findJobCollection(email) {
-    const jobCollection = await (
-      await this.jobCollectionModel.findOne({ email })
-    ).populate('business residential');
+    const jobCollection = await this.jobCollectionModel.findOne({
+      email,
+    });
+
+    if (jobCollection) {
+      jobCollection.populate('residential business');
+    }
+
     return jobCollection;
+  }
+
+  async deleteAllJobsAndCollections() {
+    await this.jobCollectionModel.deleteMany({});
+    await this.businessCleaningModel.deleteMany({});
+    await this.residentialCleaningModel.deleteMany({});
+
+    return;
   }
 
   findOne(id: number) {
