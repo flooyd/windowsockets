@@ -7,18 +7,18 @@ import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
 
 import {
-  WindowCleaning,
-  WindowCleaningDocument,
-} from './schemas/windowcleaning.schema';
+  ResidentialWindowCleaning,
+  ResidentialWindowCleaningDocument,
+} from './schemas/residentialWindowCleaning.schema';
 
 @Injectable()
 export class JobsService {
   constructor(
-    @InjectModel(WindowCleaning.name)
-    private windowCleaningModel: Model<WindowCleaningDocument>,
+    @InjectModel(ResidentialWindowCleaning.name)
+    private windowCleaningModel: Model<ResidentialWindowCleaningDocument>,
   ) {}
 
-  create(createJobDto: CreateJobDto): Promise<WindowCleaning> {
+  create(createJobDto: CreateJobDto): Promise<ResidentialWindowCleaning> {
     const createdJob = new this.windowCleaningModel(createJobDto);
     return createdJob.save();
   }

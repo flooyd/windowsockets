@@ -5,15 +5,18 @@ import { JobsService } from './jobs.service';
 import { JobsGateway } from './jobs.gateway';
 
 import {
-  WindowCleaning,
-  WindowCleaningSchema,
-} from './schemas/windowcleaning.schema';
+  ResidentialWindowCleaning,
+  ResidentialWindowCleaningSchema,
+} from './schemas/residentialWindowCleaning.schema';
 
 @Module({
   providers: [JobsGateway, JobsService, Logger],
   imports: [
     MongooseModule.forFeature([
-      { name: WindowCleaning.name, schema: WindowCleaningSchema },
+      {
+        name: ResidentialWindowCleaning.name,
+        schema: ResidentialWindowCleaningSchema,
+      },
     ]),
   ],
 })
