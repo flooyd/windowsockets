@@ -122,12 +122,14 @@ export class JobsService {
   }
 
   async findJobCollection(email) {
-    const jobCollection = await this.jobCollectionModel.findOne({
+    let jobCollection = await this.jobCollectionModel.findOne({
       email,
     });
 
     if (jobCollection) {
-      jobCollection.populate('residential business');
+      console.log(jobCollection);
+      jobCollection = await jobCollection.populate('business residential');
+      console.log(jobCollection);
     }
 
     return jobCollection;

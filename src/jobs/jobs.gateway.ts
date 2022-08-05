@@ -18,7 +18,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
@@ -40,13 +40,13 @@ export class JobsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @WebSocketServer() server: Server;
 
-  handleConnection(client: any, ...args: any[]) {
-    this.server.emit('message', 'You are connected to The Gigs Site 😎');
-    this.server.emit('message', 'A user has connected');
+  handleConnection(client: Socket, ...args: any[]) {
+    client.emit('selfConnect', 'You are connected to The Gigs Site 😎');
+    client.broadcast.emit('userConnect', 'A user has connected');
   }
 
   handleDisconnect(client: any) {
-    this.server.emit('message', 'A user has disconnected ☹️');
+    this.server.emit('userDisconnect', 'A user has disconnected ☹️');
   }
 
   @UseFilters(new WebSocketExceptionsFilter('createJob'))
@@ -101,7 +101,7 @@ export class JobsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
     return {
       event: 'findJobCollection',
-      data: jobCollection.toJSON(),
+      data: jobCollection,
     };
   }
 
