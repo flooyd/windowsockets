@@ -6,12 +6,14 @@ import { AppService } from './app.service';
 
 import { JobsModule } from './jobs/jobs.module';
 import { AuthModule } from './auth/auth.module';
+import { WsioModule } from './wsio/wsio.module';
 
 @Module({
   imports: [
     JobsModule,
     MongooseModule.forRoot(process.env.MONGO_DB),
     AuthModule,
+    WsioModule,
   ],
   controllers: [AppController],
   providers: [AppService, Logger],

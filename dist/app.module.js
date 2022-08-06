@@ -13,6 +13,7 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const jobs_module_1 = require("./jobs/jobs.module");
 const auth_module_1 = require("./auth/auth.module");
+const wsio_module_1 = require("./wsio/wsio.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -21,6 +22,7 @@ AppModule = __decorate([
             jobs_module_1.JobsModule,
             mongoose_1.MongooseModule.forRoot(process.env.MONGO_DB),
             auth_module_1.AuthModule,
+            wsio_module_1.WsioModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, common_1.Logger],
