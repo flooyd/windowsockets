@@ -16,6 +16,7 @@ export declare class JobsGateway implements OnGatewayConnection, OnGatewayDiscon
         data: import("./schemas/businessWindowCleaning.schema").BusinessWindowCleaning | import("./schemas/residentialWindowCleaning.schema").ResidentialWindowCleaning;
     }>;
     findAll(): WsResponse<CreateJobDto[]>;
+    chat(client: Socket, data: string): {};
     findJobCollection(): Promise<{
         event: string;
         data: string;

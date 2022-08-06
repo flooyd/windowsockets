@@ -54,6 +54,9 @@ let JobsGateway = JobsGateway_1 = class JobsGateway {
             data: jobs,
         };
     }
+    chat(client, data) {
+        return {};
+    }
     async findJobCollection() {
         this.logger.log('FIND_JOB_COLLECTION:', JobsGateway_1.name);
         const jobCollection = await this.jobsService.findJobCollection('floydtjones@gmail.com');
@@ -114,6 +117,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Object)
 ], JobsGateway.prototype, "findAll", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('chat'),
+    __param(0, (0, websockets_1.ConnectedSocket)()),
+    __param(1, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket, String]),
+    __metadata("design:returntype", void 0)
+], JobsGateway.prototype, "chat", null);
 __decorate([
     (0, common_1.UseFilters)(new WebSocketExceptionsFilter_1.WebSocketExceptionsFilter('findJobCollection')),
     (0, websockets_1.SubscribeMessage)('findJobCollection'),

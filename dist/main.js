@@ -7,7 +7,7 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.useLogger(util_1.default);
     util_1.default.log(`Listening on port ${process.env.PORT}`);
-    await app.listen(3000);
+    await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

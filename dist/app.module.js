@@ -17,7 +17,11 @@ let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [jobs_module_1.JobsModule, mongoose_1.MongooseModule.forRoot('mongodb://localhost/gigs'), auth_module_1.AuthModule],
+        imports: [
+            jobs_module_1.JobsModule,
+            mongoose_1.MongooseModule.forRoot(process.env.MONGO_DB),
+            auth_module_1.AuthModule,
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, common_1.Logger],
     })

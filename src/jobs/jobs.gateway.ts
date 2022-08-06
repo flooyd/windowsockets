@@ -6,6 +6,7 @@ import {
   OnGatewayConnection,
   WebSocketServer,
   OnGatewayDisconnect,
+  ConnectedSocket,
 } from '@nestjs/websockets';
 import {
   HttpException,
@@ -84,6 +85,11 @@ export class JobsGateway implements OnGatewayConnection, OnGatewayDisconnect {
       event: 'findAllJobs',
       data: jobs,
     };
+  }
+
+  @SubscribeMessage('chat')
+  chat(@ConnectedSocket() client: Socket, @MessageBody() data: string) {
+    return {};
   }
 
   @UseFilters(new WebSocketExceptionsFilter('findJobCollection'))
