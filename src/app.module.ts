@@ -8,7 +8,11 @@ import { JobsModule } from './jobs/jobs.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [JobsModule, MongooseModule.forRoot('mongodb://localhost/gigs'), AuthModule],
+  imports: [
+    JobsModule,
+    MongooseModule.forRoot(process.env.MONGO_DB),
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService, Logger],
 })
