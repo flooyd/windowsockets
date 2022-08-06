@@ -77,7 +77,10 @@ let JobsGateway = JobsGateway_1 = class JobsGateway {
                 data: 'No collection could be found!!!',
             };
         }
-        return jobCollections;
+        return {
+            event: 'findAllOfType',
+            data: jobCollections,
+        };
     }
     findOne(id) {
         return this.jobsService.findOne(id);

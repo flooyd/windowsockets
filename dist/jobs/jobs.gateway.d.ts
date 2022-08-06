@@ -1,28 +1,3 @@
-/// <reference types="mongoose/types/aggregate" />
-/// <reference types="mongoose/types/callback" />
-/// <reference types="mongoose/types/collection" />
-/// <reference types="mongoose/types/connection" />
-/// <reference types="mongoose/types/cursor" />
-/// <reference types="mongoose/types/document" />
-/// <reference types="mongoose/types/error" />
-/// <reference types="mongoose/types/expressions" />
-/// <reference types="mongoose/types/helpers" />
-/// <reference types="mongoose/types/middlewares" />
-/// <reference types="mongoose/types/indexes" />
-/// <reference types="mongoose/types/models" />
-/// <reference types="mongoose/types/mongooseoptions" />
-/// <reference types="mongoose/types/pipelinestage" />
-/// <reference types="mongoose/types/populate" />
-/// <reference types="mongoose/types/query" />
-/// <reference types="mongoose/types/schemaoptions" />
-/// <reference types="mongoose/types/schematypes" />
-/// <reference types="mongoose/types/session" />
-/// <reference types="mongoose/types/types" />
-/// <reference types="mongoose/types/utility" />
-/// <reference types="mongoose/types/validation" />
-/// <reference types="mongoose/types/virtuals" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose/types/inferschematype" />
 import { WsResponse, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 import { LoggerService } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
@@ -38,7 +13,7 @@ export declare class JobsGateway implements OnGatewayConnection, OnGatewayDiscon
     handleDisconnect(client: any): void;
     create(createJobDto: CreateJobDto): Promise<{
         event: string;
-        data: import("./schemas/residentialWindowCleaning.schema").ResidentialWindowCleaning | import("./schemas/businessWindowCleaning.schema").BusinessWindowCleaning;
+        data: import("./schemas/businessWindowCleaning.schema").BusinessWindowCleaning | import("./schemas/residentialWindowCleaning.schema").ResidentialWindowCleaning;
     }>;
     findAll(): WsResponse<CreateJobDto[]>;
     findJobCollection(): Promise<{
@@ -50,11 +25,14 @@ export declare class JobsGateway implements OnGatewayConnection, OnGatewayDiscon
             _id: import("mongoose").Types.ObjectId;
         };
     }>;
-    findAllOfType(type: String): Promise<(import("./schemas/jobCollection.schema").JobCollection & import("mongoose").Document<any, any, any> & {
-        _id: import("mongoose").Types.ObjectId;
-    })[] | {
+    findAllOfType(type: String): Promise<{
         event: string;
         data: string;
+    } | {
+        event: string;
+        data: (import("./schemas/jobCollection.schema").JobCollection & import("mongoose").Document<any, any, any> & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
     }>;
     findOne(id: number): string;
     update(updateJobDto: UpdateJobDto): string;

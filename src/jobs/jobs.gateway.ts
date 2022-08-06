@@ -119,7 +119,10 @@ export class JobsGateway implements OnGatewayConnection, OnGatewayDisconnect {
       };
     }
 
-    return jobCollections;
+    return {
+      event: 'findAllOfType',
+      data: jobCollections,
+    };
   }
 
   @SubscribeMessage('findOneJob')
