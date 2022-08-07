@@ -6,8 +6,5 @@ export declare class WsioGateway {
     server: Server;
     createThing(createThingDto: any): Promise<void>;
     findAllThings(client: Socket): Promise<void>;
-    deleteThing(magicNumber: any): Promise<{
-        event: string;
-        data: string;
-    }>;
+    deleteThings(client: Socket): Promise<void>;
 }

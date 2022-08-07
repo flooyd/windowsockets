@@ -24,23 +24,18 @@ let WsioGateway = class WsioGateway {
     async createThing(createThingDto) {
         console.log(util_1.blah);
         (0, util_1.add)(createThingDto);
-        this.server.emit('createThing', createThingDto);
+        await this.server.emit('createThing', createThingDto);
     }
     async findAllThings(client) {
-        await client.emit('findAllThings', util_1.blah);
+        await this.server.emit('findAllThings', util_1.blah.length === 0 ? { message: 'no things found' } : util_1.blah);
     }
-    async deleteThing(magicNumber) {
-        if (magicNumber.number !== 77) {
-            return {
-                event: 'deleteThings',
-                data: 'u did not send magic number',
-            };
-        }
+    async deleteThings(client) {
+        console.log('hi');
         (0, util_1.deleteAll)();
-        return {
-            event: 'deleteThings',
-            data: 'things deleted',
-        };
+        await this.server.emit('deleteThings', {
+            message: 'things have been deleted',
+        });
+        console.log('hi');
     }
 };
 __decorate([
@@ -62,11 +57,10 @@ __decorate([
 ], WsioGateway.prototype, "findAllThings", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('deleteThings'),
-    __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [socket_io_1.Socket]),
     __metadata("design:returntype", Promise)
-], WsioGateway.prototype, "deleteThing", null);
+], WsioGateway.prototype, "deleteThings", null);
 WsioGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {
