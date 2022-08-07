@@ -1,4 +1,4 @@
-import { Logger, Module } from '@nestjs/common';
+import { CacheModule, Logger, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { AppController } from './app.controller';
@@ -14,6 +14,7 @@ import { WsioModule } from './wsio/wsio.module';
     MongooseModule.forRoot(process.env.MONGO_DB),
     AuthModule,
     WsioModule,
+    CacheModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService, Logger],

@@ -12,6 +12,8 @@ async function bootstrap() {
   logger.log(`Listening on port ${process.env.PORT}`);
 
   await app.listen(process.env.PORT || 3000);
+
+  global.things = [];
 }
 
 bootstrap();

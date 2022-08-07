@@ -8,6 +8,7 @@ async function bootstrap() {
     app.useLogger(util_1.default);
     util_1.default.log(`Listening on port ${process.env.PORT}`);
     await app.listen(process.env.PORT || 3000);
+    global.things = [];
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

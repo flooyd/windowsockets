@@ -23,6 +23,7 @@ AppModule = __decorate([
             mongoose_1.MongooseModule.forRoot(process.env.MONGO_DB),
             auth_module_1.AuthModule,
             wsio_module_1.WsioModule,
+            common_1.CacheModule.register(),
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, common_1.Logger],
