@@ -14,45 +14,41 @@ import {
 import { WsioService } from './wsio.service';
 import { Cache } from 'cache-manager';
 import { Server, Socket } from 'socket.io';
+import { blah, add, deleteAll } from 'src/util';
 
 @WebSocketGateway({
   cors: {
     origin: '*',
   },
 })
-export class WsioGateway implements OnGatewayConnection {
-  constructor(
-    private readonly wsioService: WsioService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+export class WsioGateway {
+  constructor(private readonly wsioService: WsioService) {}
 
   @WebSocketServer() server: Server;
 
-  async handleConnection(client: any, ...args: any[]) {
-    if (!(await this.cacheManager.get('things'))) {
-      console.log('xd');
-      await this.cacheManager.set('things', [], { ttl: 10000 });
-    }
-  }
-
   @SubscribeMessage('createThing')
   async createThing(@MessageBody() createThingDto: any) {
-    const things: [] = await this.cacheManager.get('things');
-    console.log(things);
-    await this.cacheManager.set('things', [...things, createThingDto]);
+    console.log(blah);
+    add(createThingDto);
     this.server.emit('createThing', createThingDto);
   }
 
   @SubscribeMessage('findAllThings')
   async findAllThings(client: Socket) {
-    console.log('hi');
-    let data = await this.cacheManager.get('things');
-    await client.emit('findAllThings', data);
+    await client.emit('findAllThings', blah);
   }
 
   @SubscribeMessage('deleteThings')
-  async deleteThing(@MessageBody() id: number) {
-    await this.cacheManager.set('things', []);
+  async deleteThing(@MessageBody() magicNumber: any) {
+    if (magicNumber.number !== 77) {
+      return {
+        event: 'deleteThings',
+        data: 'u did not send magic number',
+      };
+    }
+
+    deleteAll();
+
     return {
       event: 'deleteThings',
       data: 'things deleted',

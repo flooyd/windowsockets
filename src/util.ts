@@ -4,6 +4,17 @@ import {
 } from 'nest-winston';
 import * as winston from 'winston';
 
+export let blah = [];
+blah.push(5);
+
+export const add = (item) => {
+  blah = [...blah, item];
+};
+
+export const deleteAll = () => {
+  blah = [];
+};
+
 const logger = WinstonModule.createLogger({
   transports: [
     new winston.transports.Console({
